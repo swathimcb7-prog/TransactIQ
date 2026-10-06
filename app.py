@@ -15,7 +15,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-app.secret_key = "transactiq_secret_key"
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "transactiq_secret_key"
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -528,10 +531,7 @@ def standardize_transactions(df):
 
     result = pd.DataFrame()
 
-    # -----------------------------------------------------
     # DATE
-    # -----------------------------------------------------
-
     if mapping["date"]:
 
         result["date"] = pd.to_datetime(
@@ -544,10 +544,7 @@ def standardize_transactions(df):
 
         result["date"] = pd.NaT
 
-    # -----------------------------------------------------
     # TIME
-    # -----------------------------------------------------
-
     if mapping["time"]:
 
         result["time"] = (
@@ -561,14 +558,10 @@ def standardize_transactions(df):
 
         result["time"] = ""
 
-    # -----------------------------------------------------
     # TRANSACTION DETAILS
-    # -----------------------------------------------------
-
     if mapping["transaction_details"]:
 
         result["transaction_details"] = (
-
             df[mapping["transaction_details"]]
             .fillna("")
             .astype(str)
@@ -579,14 +572,10 @@ def standardize_transactions(df):
 
         result["transaction_details"] = ""
 
-    # -----------------------------------------------------
     # TRANSACTION ID
-    # -----------------------------------------------------
-
     if mapping["transaction_id"]:
 
         result["transaction_id"] = (
-
             df[mapping["transaction_id"]]
             .fillna("")
             .astype(str)
@@ -597,9 +586,7 @@ def standardize_transactions(df):
 
         result["transaction_id"] = ""
 
-    # -----------------------------------------------------
     # AMOUNT + TYPE
-    # -----------------------------------------------------
 
     # CASE 1:
     # Separate debit and credit columns
@@ -621,7 +608,6 @@ def standardize_transactions(df):
         if mapping["debit"]:
 
             debit_values = (
-
                 df[mapping["debit"]]
                 .apply(clean_amount)
                 .fillna(0)
@@ -630,14 +616,12 @@ def standardize_transactions(df):
         if mapping["credit"]:
 
             credit_values = (
-
                 df[mapping["credit"]]
                 .apply(clean_amount)
                 .fillna(0)
             )
 
         result["amount"] = (
-
             debit_values.abs()
             +
             credit_values.abs()
@@ -663,7 +647,6 @@ def standardize_transactions(df):
     elif mapping["amount"]:
 
         raw_amount = (
-
             df[mapping["amount"]]
             .apply(clean_amount)
         )
@@ -673,7 +656,6 @@ def standardize_transactions(df):
         if mapping["type"]:
 
             result["type"] = (
-
                 df[mapping["type"]]
                 .apply(standardize_type)
             )
@@ -681,13 +663,9 @@ def standardize_transactions(df):
         else:
 
             result["type"] = raw_amount.apply(
-
                 lambda x:
-
                 "paid"
-
                 if pd.notna(x) and x < 0
-
                 else "received"
             )
 
@@ -697,22 +675,16 @@ def standardize_transactions(df):
     else:
 
         result["amount"] = 0
-
         result["type"] = "unknown"
 
-    # -----------------------------------------------------
     # CLEAN TYPE
-    # -----------------------------------------------------
 
     result["type"] = (
-
         result["type"]
         .fillna("unknown")
     )
 
-    # -----------------------------------------------------
     # REMOVE INVALID AMOUNTS
-    # -----------------------------------------------------
 
     result = result[
         result["amount"].notna()
@@ -722,29 +694,21 @@ def standardize_transactions(df):
         result["amount"] > 0
     ]
 
-    # -----------------------------------------------------
     # AUTOMATIC CATEGORY
-    # -----------------------------------------------------
 
     result["category"] = (
-
         result["transaction_details"]
         .apply(categorize_transaction)
     )
 
-    # -----------------------------------------------------
     # DAY
-    # -----------------------------------------------------
 
     result["day"] = (
-
         result["date"]
         .dt.day_name()
     )
 
-    # -----------------------------------------------------
     # FINAL COLUMN ORDER
-    # -----------------------------------------------------
 
     result = result[
         [
@@ -943,9 +907,7 @@ def upload():
 
         file = request.files.get("file")
 
-        # -------------------------------------------------
         # CHECK FILE
-        # -------------------------------------------------
 
         if not file or file.filename == "":
 
@@ -981,17 +943,13 @@ def upload():
 
         try:
 
-            # -------------------------------------------------
             # SAVE ORIGINAL FILE
-            # -------------------------------------------------
 
             file.save(
                 original_path
             )
 
-            # -------------------------------------------------
             # READ CSV
-            # -------------------------------------------------
 
             df = pd.read_csv(
                 original_path
@@ -1003,31 +961,26 @@ def upload():
 
             print(df.head())
 
-            # -------------------------------------------------
             # CLEANING SUMMARY
-            # -------------------------------------------------
 
             original_rows = len(df)
 
-            # Number of rows containing at least one null
             null_rows = int(
                 df.isnull()
                 .any(axis=1)
                 .sum()
             )
 
-            # Number of exact duplicate rows
             duplicate_rows = int(
                 df.duplicated()
                 .sum()
             )
 
             # Remove duplicate rows
+
             df = df.drop_duplicates().copy()
 
-            # -------------------------------------------------
             # STANDARDIZE TRANSACTIONS
-            # -------------------------------------------------
 
             cleaned_df, mapping = (
                 standardize_transactions(df)
@@ -1037,18 +990,14 @@ def upload():
                 cleaned_df
             )
 
-            # -------------------------------------------------
             # SAVE CLEANED CSV
-            # -------------------------------------------------
 
             cleaned_df.to_csv(
                 cleaned_path,
                 index=False
             )
 
-            # -------------------------------------------------
             # SAVE CLEANING SUMMARY
-            # -------------------------------------------------
 
             session["cleaning_summary"] = {
 
@@ -1061,9 +1010,7 @@ def upload():
                 "cleaned_rows": cleaned_rows
             }
 
-            # -------------------------------------------------
             # PRINT CLEANING SUMMARY
-            # -------------------------------------------------
 
             print("\n====================================")
             print("CSV CLEANING SUMMARY")
@@ -1089,9 +1036,7 @@ def upload():
                 cleaned_rows
             )
 
-            # -------------------------------------------------
             # PRINT CLEANED CSV
-            # -------------------------------------------------
 
             print("\n====================================")
             print("CLEANED CSV")
@@ -1101,9 +1046,7 @@ def upload():
                 cleaned_df.head()
             )
 
-            # -------------------------------------------------
             # CATEGORY COUNTS
-            # -------------------------------------------------
 
             print("\n====================================")
             print("CATEGORY COUNTS")
@@ -1115,9 +1058,7 @@ def upload():
                 ].value_counts()
             )
 
-            # -------------------------------------------------
             # TRANSACTION TYPE COUNTS
-            # -------------------------------------------------
 
             print("\n====================================")
             print("TRANSACTION TYPE COUNTS")
@@ -1129,9 +1070,7 @@ def upload():
                 ].value_counts()
             )
 
-            # -------------------------------------------------
             # FINAL COLUMNS
-            # -------------------------------------------------
 
             print("\n====================================")
             print("FINAL COLUMNS")
@@ -1193,9 +1132,7 @@ def dashboard():
         f"user_{user_id}_cleaned.csv"
     )
 
-    # -----------------------------------------------------
     # CHECK CLEANED FILE
-    # -----------------------------------------------------
 
     if not os.path.exists(
         cleaned_path
@@ -1205,9 +1142,7 @@ def dashboard():
             url_for("upload")
         )
 
-    # -----------------------------------------------------
     # READ CLEANED CSV
-    # -----------------------------------------------------
 
     df = pd.read_csv(
         cleaned_path
@@ -1223,27 +1158,21 @@ def dashboard():
             url_for("upload")
         )
 
-    # -----------------------------------------------------
     # CONVERT DATE
-    # -----------------------------------------------------
 
     df["date"] = pd.to_datetime(
         df["date"],
         errors="coerce"
     )
 
-    # -----------------------------------------------------
     # CONVERT AMOUNT
-    # -----------------------------------------------------
 
     df["amount"] = pd.to_numeric(
         df["amount"],
         errors="coerce"
     ).fillna(0)
 
-    # -----------------------------------------------------
     # FILTER
-    # -----------------------------------------------------
 
     selected_day = request.args.get(
         "day",
@@ -1260,9 +1189,7 @@ def dashboard():
 
         filtered_df = df.copy()
 
-    # -----------------------------------------------------
     # KPI
-    # -----------------------------------------------------
 
     total_spent = filtered_df.loc[
         filtered_df["type"] == "paid",
@@ -1284,9 +1211,7 @@ def dashboard():
         total_spent
     )
 
-    # -----------------------------------------------------
     # SPENDING TREND
-    # -----------------------------------------------------
 
     spending_df = filtered_df[
         filtered_df["type"] == "paid"
@@ -1295,7 +1220,6 @@ def dashboard():
     if not spending_df.empty:
 
         trend_df = (
-
             spending_df
             .groupby("date")["amount"]
             .sum()
@@ -1332,9 +1256,7 @@ def dashboard():
         cls=plotly.utils.PlotlyJSONEncoder
     )
 
-    # -----------------------------------------------------
     # SPENDING BY DAY
-    # -----------------------------------------------------
 
     if not spending_df.empty:
 
@@ -1350,7 +1272,6 @@ def dashboard():
         ]
 
         day_df = (
-
             spending_df
             .groupby("day")["amount"]
             .sum()
@@ -1388,16 +1309,11 @@ def dashboard():
         cls=plotly.utils.PlotlyJSONEncoder
     )
 
-    # -----------------------------------------------------
     # PIE CHART
-    # -----------------------------------------------------
-    # Keeping transaction details for now.
-    # We can change this to category later.
 
     if not spending_df.empty:
 
         detail_df = (
-
             spending_df
             .groupby(
                 "transaction_details"
@@ -1412,11 +1328,8 @@ def dashboard():
         )
 
         fig_pie = px.pie(
-
             detail_df,
-
             names="transaction_details",
-
             values="amount"
         )
 
@@ -1439,9 +1352,7 @@ def dashboard():
         cls=plotly.utils.PlotlyJSONEncoder
     )
 
-    # -----------------------------------------------------
     # SMART INSIGHTS
-    # -----------------------------------------------------
 
     insights = []
 
@@ -1476,16 +1387,13 @@ def dashboard():
         ]
 
         insights.append(
-
             f"Your highest transaction was "
             f"₹{highest_transaction['amount']:,.2f} "
             f"for "
             f"{highest_transaction['transaction_details']}."
         )
 
-    # -----------------------------------------------------
     # MONEY FLOW
-    # -----------------------------------------------------
 
     money_flow = {
 
@@ -1494,9 +1402,7 @@ def dashboard():
         "received": total_received
     }
 
-    # -----------------------------------------------------
     # AVAILABLE DAYS
-    # -----------------------------------------------------
 
     available_days = [
 
@@ -1510,21 +1416,14 @@ def dashboard():
         "Sunday"
     ]
 
-    # -----------------------------------------------------
     # CLEANING SUMMARY
-    # -----------------------------------------------------
-    # IMPORTANT:
-    # Use session.get() instead of session.pop()
-    # so the summary remains visible after refresh/filter.
 
     cleaning_summary = session.get(
         "cleaning_summary",
         None
     )
 
-    # -----------------------------------------------------
     # RENDER DASHBOARD
-    # -----------------------------------------------------
 
     return render_template(
 
@@ -1575,12 +1474,20 @@ def logout():
 
 
 # =========================================================
-# RUN APPLICATION
+# INITIALIZE DATABASE
+# =========================================================
+
+# IMPORTANT FOR RENDER / GUNICORN
+# This must run when Gunicorn imports app.py.
+
+init_db()
+
+
+# =========================================================
+# RUN APPLICATION LOCALLY
 # =========================================================
 
 if __name__ == "__main__":
-
-    init_db()
 
     app.run(
         debug=True
