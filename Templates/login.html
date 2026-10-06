@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>TransactIQ - Login</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #d9c8ff 0%,
+                    transparent 35%
+                ),
+
+                radial-gradient(
+                    circle at bottom right,
+                    #c8b6ff 0%,
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #f4efff,
+                    #eee7ff
+                );
+
+
+            color: #30224a;
+
+        }
+
+
+        /* =========================
+           LOGIN CONTAINER
+        ========================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 470px;
+
+            padding: 40px;
+
+
+            border-radius: 28px;
+
+
+            background:
+                rgba(255, 255, 255, 0.58);
+
+
+            border:
+                1px solid rgba(255, 255, 255, 0.75);
+
+
+            backdrop-filter: blur(20px);
+
+            -webkit-backdrop-filter: blur(20px);
+
+
+            box-shadow:
+                0 20px 50px
+                rgba(92, 65, 145, 0.15);
+
+
+            text-align: center;
+
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #6d45c7;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .subtitle {
+
+            color: #7c6c91;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =========================
+           LOGIN ICON
+        ========================= */
+
+        .login-icon {
+
+            font-size: 52px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        /* =========================
+           HEADING
+        ========================= */
+
+        h2 {
+
+            color: #50376f;
+
+            font-size: 24px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .description {
+
+            color: #7b6d8d;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .login-form {
+
+            text-align: left;
+
+        }
+
+
+        .input-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #5e4a77;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+
+        .input-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border-radius: 12px;
+
+            border: 1px solid #d5c8ea;
+
+            background: white;
+
+            color: #5a4775;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .input-group input::placeholder {
+
+            color: #a59ab5;
+
+        }
+
+
+        .input-group input:focus {
+
+            border-color: #9b7cdb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(117, 82, 217, 0.10);
+
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .form-message {
+
+            margin-bottom: 18px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: #ffe9ed;
+
+            color: #b33a50;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: #7552d9;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-btn:hover {
+
+            background: #6040bd;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =========================
+           SIGNUP
+        ========================= */
+
+        .signup-text {
+
+            margin-top: 22px;
+
+            color: #7c6c91;
+
+            font-size: 13px;
+
+        }
+
+
+        .signup-text a {
+
+            color: #7552d9;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+        }
+
+
+        .signup-text a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================
+           HOME LINK
+        ========================= */
+
+        .back-btn {
+
+            display: inline-block;
+
+            margin-top: 18px;
+
+            text-decoration: none;
+
+            color: #7552d9;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-btn:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================
+           FOOTER TEXT
+        ========================= */
+
+        .login-footer {
+
+            margin-top: 22px;
+
+            font-size: 12px;
+
+            color: #8b7c9d;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .login-container {
+
+                padding: 25px;
+
+            }
+
+
+            .logo {
+
+                font-size: 27px;
+
+            }
+
+
+            h2 {
+
+                font-size: 21px;
+
+            }
+
+
+            .login-icon {
+
+                font-size: 45px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <!-- BRAND -->
+
+        <div class="logo">
+            TransactIQ
+        </div>
+
+
+        <div class="subtitle">
+            Smart Transaction Analytics
+        </div>
+
+
+        <!-- LOGIN ICON -->
+
+        <div class="login-icon">
+            🔐
+        </div>
+
+
+        <!-- HEADING -->
+
+        <h2>
+            Welcome Back
+        </h2>
+
+
+        <p class="description">
+
+            Sign in to access your transaction
+            analytics dashboard.
+
+        </p>
+
+
+        <!-- MESSAGE -->
+
+        {% if message %}
+
+        <div class="form-message">
+            {{ message }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- LOGIN FORM -->
+
+        <form
+            action="{{ url_for('login') }}"
+            method="POST"
+            class="login-form"
+        >
+
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login →
+            </button>
+
+
+        </form>
+
+
+        <!-- SIGNUP -->
+
+        <div class="signup-text">
+
+            Don't have an account?
+
+            <a href="{{ url_for('signup') }}">
+                Create account
+            </a>
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('index') }}"
+            class="back-btn"
+        >
+            ← Back to Home
+        </a>
+
+
+        <!-- FOOTER -->
+
+        <div class="login-footer">
+
+            Secure • Simple • Smart
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

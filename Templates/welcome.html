@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Get Started | TransactIQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="login-page">
+
+
+    <div class="login-container">
+
+
+        <div class="login-card">
+
+
+            <!-- Logo -->
+
+            <div class="login-logo">
+                ✦ TransactIQ
+            </div>
+
+
+            <!-- Welcome -->
+
+            <h1>
+                Welcome to TransactIQ ✨
+            </h1>
+
+
+            <p class="login-subtitle">
+                Your smart transaction analytics
+                journey starts here.
+            </p>
+
+
+
+            <!-- Create Account -->
+
+            <a
+                href="{{ url_for('signup') }}"
+                class="login-submit"
+                style="display: block;
+                       text-align: center;
+                       text-decoration: none;
+                       margin-bottom: 15px;"
+            >
+                Create Account →
+            </a>
+
+
+
+            <!-- Login -->
+
+            <a
+                href="{{ url_for('login') }}"
+                class="secondary-btn"
+                style="display: block;
+                       text-align: center;"
+            >
+                I Already Have an Account
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

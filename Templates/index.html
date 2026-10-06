@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TransactIQ | Smart Transaction Analytics</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body class="home-page">
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="home-navbar">
+
+        <!-- Logo -->
+        <a href="{{ url_for('index') }}" class="home-logo">
+
+            <div class="home-logo-icon">
+                T
+            </div>
+
+            <div class="home-logo-text">
+                TransactIQ
+            </div>
+
+        </a>
+
+
+        <!-- Navigation -->
+        <div class="home-nav-links">
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#how-it-works">
+                How It Works
+            </a>
+
+            <a href="{{ url_for('login') }}" class="home-login">
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+    <section class="home-hero">
+
+        <!-- LEFT SIDE -->
+        <div class="hero-left">
+
+            <div class="hero-label">
+                <span></span>
+                Smart Transaction Analytics
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Understand your
+                <strong>money</strong>
+                better.
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Turn your bank transaction data into clear,
+                meaningful insights. Upload your CSV and let
+                TransactIQ organize, analyze and visualize
+                your spending automatically.
+
+            </p>
+
+
+            <!-- Buttons -->
+            <div class="hero-actions">
+
+                <a
+                    href="{{ url_for('signup') }}"
+                    class="hero-primary"
+                >
+                    Get Started
+                    <span>→</span>
+                </a>
+
+
+                <a
+                    href="#features"
+                    class="hero-secondary"
+                >
+                    Explore Features
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DASHBOARD PREVIEW
+        ================================================== -->
+
+        <div class="hero-right">
+
+            <div class="dashboard-window">
+
+                <!-- Dashboard Header -->
+                <div class="dashboard-window-header">
+
+                    <div class="dashboard-window-title">
+                        Financial Overview
+                    </div>
+
+                    <div class="dashboard-window-period">
+                        This Month
+                    </div>
+
+                </div>
+
+
+                <!-- KPI PREVIEW -->
+                <div class="preview-kpis">
+
+                    <div class="preview-kpi">
+
+                        <div class="preview-kpi-label">
+                            Total Spent
+                        </div>
+
+                        <div class="preview-kpi-value">
+                            ₹12,450
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-kpi">
+
+                        <div class="preview-kpi-label">
+                            Received
+                        </div>
+
+                        <div class="preview-kpi-value">
+                            ₹35,000
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-kpi">
+
+                        <div class="preview-kpi-label">
+                            Transactions
+                        </div>
+
+                        <div class="preview-kpi-value">
+                            42
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHART -->
+                <div class="preview-chart">
+
+                    <div class="preview-chart-title">
+                        Spending Overview
+                    </div>
+
+
+                    <div class="preview-bars">
+
+                        <div class="preview-bar"></div>
+
+                        <div class="preview-bar"></div>
+
+                        <div class="preview-bar active"></div>
+
+                        <div class="preview-bar"></div>
+
+                        <div class="preview-bar active"></div>
+
+                        <div class="preview-bar active"></div>
+
+                        <div class="preview-bar"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ====================================================== -->
+
+    <section
+        class="home-features"
+        id="features"
+    >
+
+        <div class="home-section-heading">
+
+            <div class="home-section-label">
+                Powerful Features
+            </div>
+
+
+            <h2>
+                Everything you need to understand your transactions
+            </h2>
+
+
+            <p>
+                Simple tools that turn your transaction file
+                into useful financial information.
+            </p>
+
+        </div>
+
+
+        <!-- Feature Cards -->
+        <div class="home-feature-grid">
+
+
+            <!-- Feature 1 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    ↗
+                </div>
+
+                <h3>
+                    Smart Transaction Analysis
+                </h3>
+
+                <p>
+                    Quickly understand where your money goes,
+                    how much you spend and how your transactions
+                    change over time.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 2 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Automatic Data Cleaning
+                </h3>
+
+                <p>
+                    Upload your CSV and let the system identify
+                    duplicates, missing values and inconsistent
+                    transaction data.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 3 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    ◈
+                </div>
+
+                <h3>
+                    Interactive Dashboard
+                </h3>
+
+                <p>
+                    Explore your financial data through clean
+                    charts, KPI cards and easy-to-understand
+                    visualizations.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 4 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    ₹
+                </div>
+
+                <h3>
+                    Spending Insights
+                </h3>
+
+                <p>
+                    Discover your highest spending days,
+                    transaction patterns and important changes
+                    in your financial activity.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 5 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    ↕
+                </div>
+
+                <h3>
+                    Paid & Received
+                </h3>
+
+                <p>
+                    Clearly separate money you paid from money
+                    you received to get a better picture of your
+                    cash flow.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 6 -->
+            <div class="home-feature-card">
+
+                <div class="home-feature-icon">
+                    CSV
+                </div>
+
+                <h3>
+                    Simple CSV Upload
+                </h3>
+
+                <p>
+                    No complicated setup. Upload your bank
+                    statement and start exploring your financial
+                    information in seconds.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW IT WORKS
+    ====================================================== -->
+
+    <section
+        class="home-how"
+        id="how-it-works"
+    >
+
+        <div class="home-section-heading">
+
+            <div class="home-section-label">
+                How It Works
+            </div>
+
+
+            <h2>
+                From transactions to insights
+            </h2>
+
+
+            <p>
+                Three simple steps to understand your financial data.
+            </p>
+
+        </div>
+
+
+        <div class="home-steps">
+
+
+            <!-- STEP 1 -->
+            <div class="home-step">
+
+                <div class="home-step-number">
+                    01
+                </div>
+
+                <h3>
+                    Upload
+                </h3>
+
+                <p>
+                    Upload your bank transaction CSV file
+                    securely.
+                </p>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+            <div class="home-step">
+
+                <div class="home-step-number">
+                    02
+                </div>
+
+                <h3>
+                    Analyze
+                </h3>
+
+                <p>
+                    TransactIQ cleans and analyzes your
+                    transaction data automatically.
+                </p>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+            <div class="home-step">
+
+                <div class="home-step-number">
+                    03
+                </div>
+
+                <h3>
+                    Understand
+                </h3>
+
+                <p>
+                    Explore your spending patterns through
+                    a simple interactive dashboard.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CTA SECTION
+    ====================================================== -->
+
+    <section class="home-cta-section">
+
+        <div class="home-cta">
+
+            <h2>
+                Ready to understand your money?
+            </h2>
+
+
+            <p>
+                Start analyzing your transactions today.
+            </p>
+
+
+            <a
+                href="{{ url_for('signup') }}"
+                class="home-cta-button"
+            >
+                Get Started →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="home-footer">
+
+        <div class="home-footer-brand">
+            © 2026 TransactIQ
+        </div>
+
+
+        <div>
+            Smart • Simple • Financial Insights
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
